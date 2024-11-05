@@ -18,5 +18,12 @@ function fetchArticleById(article_id){
         console.error(err)
     })
 }
+function fetchCommentsByArticleId(article_id){
+    return api.get(`/articles/${article_id}/comments`).then((response) => {
+        return response.data.comments
+    }).catch((err) => {
+        console.error(err)
+    })
+}
 
-export { fetchAllArticles, fetchArticleById }
+export { fetchAllArticles, fetchArticleById, fetchCommentsByArticleId }
