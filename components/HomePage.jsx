@@ -5,14 +5,28 @@ import ArticleCard from "./ArticleCard"
 
 export default function HomePage(){
     const [articlesList, setArticlesList] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
 
     useEffect(() => {
+        setIsLoading(true)
+        setIsError(false)
         fetchAllArticles()
         .then((response) => {
             console.log(response)
             setArticlesList(response)
+            setIsLoading(false)
+        }).catch((err) => {
+            setIsError(true)
         })
     }, [])
+
+    if(isError){
+        return <p>ERROR 404 - Content not found</p>
+    }
+    if (isLoading){
+        return <div>LOADING!</div>            
+    }
 
     return (
         <div>
@@ -22,5 +36,6 @@ export default function HomePage(){
                 })}
             </ul>
         </div>
+        
     )
 }

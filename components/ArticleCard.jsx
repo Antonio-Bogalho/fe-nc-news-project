@@ -1,8 +1,8 @@
-
-
+import { Link } from "react-router-dom"
 export default function ArticleCard({ article }){
     return (
         <li>
+            <Link to={`/articles/${article.article_id}`} >
             <h3>{article.title}</h3>
             <p>Topic: {article.topic}</p>
             <p>Posted by: {article.author}</p>
@@ -12,6 +12,7 @@ export default function ArticleCard({ article }){
             <button className="item-card-buy-btn">+1 vote</button>
             <button className="item-card-buy-btn">-1 vote</button>
             <p>Created at: {article.created_at}</p>
+            </Link>
         </li>
     )
 }
