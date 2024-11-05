@@ -7,7 +7,16 @@ const api = axios.create({
 function fetchAllArticles(){
     return api.get(`/articles`).then((response) => {
         return response.data.articles
+    }).catch((err) => {
+        console.error(err)
+    })
+}
+function fetchArticleById(article_id){
+    return api.get(`/articles/${article_id}`).then((response) => {
+        return response.data.article
+    }).catch((err) => {
+        console.error(err)
     })
 }
 
-export { fetchAllArticles }
+export { fetchAllArticles, fetchArticleById }
