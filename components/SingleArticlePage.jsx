@@ -10,31 +10,27 @@ export default function SingleArticlePage() {
   const { article_id } = useParams();
 
   useEffect(() => {
-    if (article_id) {
-      setIsLoading(true);
-      setIsError(false);
-      fetchArticleById(article_id)
-        .then((response) => {
-          setSingleArticle(response);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setIsError(true);
-          setIsLoading(false);
-        });
-    }
+    setIsLoading(true);
+    setIsError(false);
+    fetchArticleById(article_id)
+      .then((response) => {
+        setSingleArticle(response);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsError(true);
+        setIsLoading(false);
+      });
   }, [article_id]);
 
   useEffect(() => {
-    if (article_id) {
-      fetchCommentsByArticleId(article_id)
-        .then((commentData) => {
-          setComments(commentData);
-        })
-        .catch((err) => {
-          setIsError(true);
-        });
-    }
+    fetchCommentsByArticleId(article_id)
+      .then((commentData) => {
+        setComments(commentData);
+      })
+      .catch((err) => {
+        setIsError(true);
+      });
   }, [article_id]);
 
   if (isError) {
@@ -45,32 +41,30 @@ export default function SingleArticlePage() {
   }
 
   return (
-    <>
-      <section>
-        <h3>{singleArticle.title}</h3>
-        <p>Topic: {singleArticle.topic}</p>
-        <p>Posted by: {singleArticle.author}</p>
-        <img src={singleArticle.article_img_url} />
-        <p>Article Votes: {singleArticle.votes}</p>
-        <p>Comments: {singleArticle.comment_count}</p>
-        <button>+1 vote</button>
-        <button>-1 vote</button>
-        <p>
-          Created at: {new Date(singleArticle.created_at).toLocaleDateString()}
-        </p>
+    <section>
+      <h3>{singleArticle.title}</h3>
+      <p>Topic: {singleArticle.topic}</p>
+      <p>Posted by: {singleArticle.author}</p>
+      <img src={singleArticle.article_img_url} />
+      <p>Article Votes: {singleArticle.votes}</p>
+      <p>Comments: {singleArticle.comment_count}</p>
+      <button>+1 vote</button>
+      <button>-1 vote</button>
+      <p>
+        Created at: {new Date(singleArticle.created_at).toLocaleDateString()}
+      </p>
 
-        <h3>Comments:</h3>
-        <input type="text" placeholder="Insert your comment here!" />
-        {comments.length > 0 ? (
-          <ul>
-            {comments.map((comment) => (
-              <CommentCard key={comment.comment_id} comment={comment} />
-            ))}
-          </ul>
-        ) : (
-          <p>No comments in this article, be the first to post something!</p>
-        )}
-      </section>
-    </>
+      <h3>Comments:</h3>
+      <input type="text" placeholder="Insert your comment here!" />
+      {comments.length > 0 ? (
+        <ul>
+          {comments.map((comment) => (
+            <CommentCard key={comment.comment_id} comment={comment} />
+          ))}
+        </ul>
+      ) : (
+        <p>No comments in this article, be the first to post something!</p>
+      )}
+    </section>
   );
 }
