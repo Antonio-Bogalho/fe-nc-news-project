@@ -13,7 +13,6 @@ export default function HomePage(){
         setIsError(false)
         fetchAllArticles()
         .then((response) => {
-            console.log(response)
             setArticlesList(response)
             setIsLoading(false)
         }).catch((err) => {
