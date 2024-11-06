@@ -35,4 +35,16 @@ function fetchCommentsByArticleId(article_id) {
     });
 }
 
-export { fetchAllArticles, fetchArticleById, fetchCommentsByArticleId };
+function updateArticleById(article_id, increment){
+  return api
+    .patch(`/articles/${article_id}`, {inc_votes: increment})
+    .then((response) => {
+      return response.data.article
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
+
+export { fetchAllArticles, fetchArticleById, fetchCommentsByArticleId, updateArticleById };

@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { fetchArticleById, fetchCommentsByArticleId } from "../utils/api";
+import { fetchArticleById, updateArticleById } from "../utils/api";
 import CommentCard from "./CommentCard";
+
 export default function SingleArticlePage() {
   const [singleArticle, setSingleArticle] = useState({});
-  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const { article_id } = useParams();
+  const [votes, setVotes] = useState(0);
+  const [userVote, setUserVote] = useState(0);
 
   useEffect(() => {
     setIsLoading(true);
@@ -15,21 +17,12 @@ export default function SingleArticlePage() {
     fetchArticleById(article_id)
       .then((response) => {
         setSingleArticle(response);
+        setVotes(response.votes);
         setIsLoading(false);
       })
       .catch((err) => {
         setIsError(true);
         setIsLoading(false);
-      });
-  }, [article_id]);
-
-  useEffect(() => {
-    fetchCommentsByArticleId(article_id)
-      .then((commentData) => {
-        setComments(commentData);
-      })
-      .catch((err) => {
-        setIsError(true);
       });
   }, [article_id]);
 
@@ -39,6 +32,31 @@ export default function SingleArticlePage() {
   if (isLoading) {
     return <div>LOADING!</div>;
   }
+  const handleUpVote = () => {
+    if (userVote === 1) {
+      setVotes((prevVotes) => prevVotes - 1);
+      updateArticleById(singleArticle.article_id, -1);
+      setUserVote(0);
+    } else {
+      setVotes((prevVotes) =>
+        userVote === -1 ? prevVotes + 2 : prevVotes + 1
+      );
+      updateArticleById(singleArticle.article_id, userVote === -1 ? 2 : 1);
+      setUserVote(1);
+    }
+  };
+
+  const handleDownVote = () => {
+    if (userVote === -1) {
+      setVotes((prevVotes) => prevVotes + 1);
+      updateArticleById(singleArticle.article_id, 1);
+      setUserVote(0);
+    } else {
+      setVotes((prevVotes) => (userVote === 1 ? prevVotes - 2 : prevVotes - 1));
+      updateArticleById(singleArticle.article_id, userVote === 1 ? -2 : -1);
+      setUserVote(-1);
+    }
+  };
 
   return (
     <section>
@@ -46,25 +64,20 @@ export default function SingleArticlePage() {
       <p>Topic: {singleArticle.topic}</p>
       <p>Posted by: {singleArticle.author}</p>
       <img src={singleArticle.article_img_url} />
-      <p>Article Votes: {singleArticle.votes}</p>
+      <p>Article Votes: {votes}</p>
       <p>Comments: {singleArticle.comment_count}</p>
-      <button>+1 vote</button>
-      <button>-1 vote</button>
+      <button onClick={handleUpVote} disabled={userVote === 1}>
+        +1 vote
+      </button>
+      <button onClick={handleDownVote} disabled={userVote === -1}>
+        -1 vote
+      </button>
       <p>
         Created at: {new Date(singleArticle.created_at).toLocaleDateString()}
       </p>
 
       <h3>Comments:</h3>
-      <input type="text" placeholder="Insert your comment here!" />
-      {comments.length > 0 ? (
-        <ul>
-          {comments.map((comment) => (
-            <CommentCard key={comment.comment_id} comment={comment} />
-          ))}
-        </ul>
-      ) : (
-        <p>No comments in this article, be the first to post something!</p>
-      )}
+      <CommentCard article_id={article_id} />
     </section>
   );
 }
