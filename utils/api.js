@@ -35,16 +35,31 @@ function fetchCommentsByArticleId(article_id) {
     });
 }
 
-function updateArticleById(article_id, increment){
+function updateArticleById(article_id, increment) {
   return api
-    .patch(`/articles/${article_id}`, {inc_votes: increment})
+    .patch(`/articles/${article_id}`, { inc_votes: increment })
     .then((response) => {
-      return response.data.article
+      return response.data.article;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+function addCommentsByArticleId(article_id, commentData) {
+  return api
+    .post(`/articles/${article_id}/comments`, commentData)
+    .then((response) => {
+      return response.data.comment;
     })
     .catch((err) => {
       console.error(err);
     });
 }
 
-
-export { fetchAllArticles, fetchArticleById, fetchCommentsByArticleId, updateArticleById };
+export {
+  fetchAllArticles,
+  fetchArticleById,
+  fetchCommentsByArticleId,
+  updateArticleById,
+  addCommentsByArticleId,
+};
