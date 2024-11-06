@@ -55,6 +55,16 @@ function addCommentsByArticleId(article_id, commentData) {
       console.error(err);
     });
 }
+function deleteCommentById(comment_id) {
+  return api
+    .delete(`/comments/${comment_id}`)
+    .then((response) => {
+      return response.data
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
 
 export {
   fetchAllArticles,
@@ -62,4 +72,5 @@ export {
   fetchCommentsByArticleId,
   updateArticleById,
   addCommentsByArticleId,
+  deleteCommentById
 };
