@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchArticleById, updateArticleById } from "../utils/api";
 import CommentCard from "./CommentCard";
 
-export default function SingleArticlePage() {
+export default function SingleArticlePage({username}) {
   const [singleArticle, setSingleArticle] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -77,7 +77,7 @@ export default function SingleArticlePage() {
       </p>
 
       <h3>Comments:</h3>
-      <CommentCard article_id={article_id} />
+      <CommentCard article_id={article_id} username={username} />
     </section>
   );
 }
