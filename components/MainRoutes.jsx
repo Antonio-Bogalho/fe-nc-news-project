@@ -2,18 +2,42 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./HomePage";
 import SingleArticlePage from "./SingleArticlePage";
 import LoginPage from "./LoginPage";
-import { useState } from "react";
+import TopicsPage from "./TopicsPage";
+import RedirectRoute from "./RedirectRoute";
 
-export default function MainRoutes(){
-    const [username, setUsername] = useState("")
-
-    return (
-        <Router>
-            <Routes>
-            <Route path="/" element={<HomePage/>} />
-            <Route path="/login" element={<LoginPage setUsername={setUsername} />} />
-            <Route path="/articles/:article_id" element={<SingleArticlePage username={username}/>} />
-            </Routes>
-        </Router>
-    )
+export default function MainRoutes({ username, setUsername, setAvatarUrl }) {
+  return (
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          <LoginPage setUsername={setUsername} setAvatarUrl={setAvatarUrl} />
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <RedirectRoute username={username}>
+            <HomePage />
+          </RedirectRoute>
+        }
+      />
+      <Route
+        path="/articles/:article_id"
+        element={
+          <RedirectRoute username={username}>
+            <SingleArticlePage username={username} />
+          </RedirectRoute>
+        }
+      />
+      <Route
+        path="/topics/:topic"
+        element={
+          <RedirectRoute username={username}>
+            <TopicsPage username={username} />
+          </RedirectRoute>
+        }
+      />
+    </Routes>
+  );
 }

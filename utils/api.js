@@ -5,34 +5,19 @@ const api = axios.create({
 });
 
 function fetchAllArticles() {
-  return api
-    .get(`/articles`)
-    .then((response) => {
-      return response.data.articles;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  return api.get(`/articles`).then((response) => {
+    return response.data.articles;
+  });
 }
 function fetchArticleById(article_id) {
-  return api
-    .get(`/articles/${article_id}`)
-    .then((response) => {
-      return response.data.article;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  return api.get(`/articles/${article_id}`).then((response) => {
+    return response.data.article;
+  });
 }
 function fetchCommentsByArticleId(article_id) {
-  return api
-    .get(`/articles/${article_id}/comments`)
-    .then((response) => {
-      return response.data.comments;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  return api.get(`/articles/${article_id}/comments`).then((response) => {
+    return response.data.comments;
+  });
 }
 
 function updateArticleById(article_id, increment) {
@@ -40,9 +25,6 @@ function updateArticleById(article_id, increment) {
     .patch(`/articles/${article_id}`, { inc_votes: increment })
     .then((response) => {
       return response.data.article;
-    })
-    .catch((err) => {
-      console.error(err);
     });
 }
 function addCommentsByArticleId(article_id, commentData) {
@@ -50,20 +32,22 @@ function addCommentsByArticleId(article_id, commentData) {
     .post(`/articles/${article_id}/comments`, commentData)
     .then((response) => {
       return response.data.comment;
-    })
-    .catch((err) => {
-      console.error(err);
     });
 }
 function deleteCommentById(comment_id) {
+  return api.delete(`/comments/${comment_id}`).then((response) => {
+    return response.data;
+  });
+}
+function fetchArticlesByTopic(topic) {
   return api
-    .delete(`/comments/${comment_id}`)
-    .then((response) => {
-      return response.data
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+    .get(`/articles?topic=${topic}`)
+    .then((response) => response.data.articles);
+}
+function fetchUsers() {
+  return api.get("/users").then((response) => {
+    return response.data.users;
+  });
 }
 
 export {
@@ -72,5 +56,7 @@ export {
   fetchCommentsByArticleId,
   updateArticleById,
   addCommentsByArticleId,
-  deleteCommentById
+  deleteCommentById,
+  fetchArticlesByTopic,
+  fetchUsers,
 };
