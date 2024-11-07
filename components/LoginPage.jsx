@@ -1,27 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchUsers } from "../utils/api";
 
-export default function LoginPage({ setUsername }) {
+export default function LoginPage({ setUsername, setAvatarUrl }) {
   const [inputUsername, setInputUsername] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [users, setUsers] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetchUsers()
+      .then((fetchedUsers) => {
+        setUsers(fetchedUsers);
+      })
+      .catch((err) => {
+        setIsError(true);
+      });
+  }, []);
+
+  if (isError) {
+    return <p>ERROR 404 - Content not found</p>;
+  }
+
   const handleLogin = () => {
-    const validUsernames = [
-      "tickle122",
-      "grumpy19",
-      "happyamy2016",
-      "cooljmessy",
-      "weegembump",
-      "jessjelly",
-    ];
-    if (validUsernames.includes(inputUsername)) {
-      setUsername(inputUsername);
+    const user = users.find((user) => user.username === inputUsername);
+    if (user) {
+      setUsername(user.username);
+      setAvatarUrl(user.avatar_url);
       navigate("/");
     } else {
-      setErrorMessage("Username does not exist!");
+      setAvatarUrl("");
     }
   };
+
   return (
     <div>
       <h1>Login</h1>
@@ -32,7 +43,6 @@ export default function LoginPage({ setUsername }) {
         onChange={(e) => setInputUsername(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
-      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 }
