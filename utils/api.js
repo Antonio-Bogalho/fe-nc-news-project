@@ -4,8 +4,10 @@ const api = axios.create({
   baseURL: "https://be-nc-news-backend-project-hauf.onrender.com/api",
 });
 
-function fetchAllArticles() {
-  return api.get(`/articles`).then((response) => {
+function fetchAllArticles({ sortBy = "created_at", order = "desc" }) {
+  return api.get(`/articles`, {
+    params: { sort_by: sortBy, order: order },  
+  } ).then((response) => {
     return response.data.articles;
   });
 }
