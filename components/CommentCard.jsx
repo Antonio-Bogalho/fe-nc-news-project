@@ -10,6 +10,8 @@ export default function CommentCard({ article_id, username }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [body, setBody] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [postError, setPostError] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
@@ -36,32 +38,55 @@ export default function CommentCard({ article_id, username }) {
   };
 
   const postComment = () => {
-    const commentData = { username, body };
-    addCommentsByArticleId(article_id, commentData)
+    if (!body.trim()) {
+      setErrorMessage("Please enter a comment before posting.");
+      return;
+    }
+    setErrorMessage("");
+
+    const optimisticComment = {
+      comment_id: Date.now(),
+      author: username,
+      body,
+      votes: 0,
+      created_at: new Date().toISOString(),
+    };
+
+    setComments((prevComments) => [optimisticComment, ...prevComments]);
+    setBody("");
+
+    addCommentsByArticleId(article_id, { username, body })
       .then((postedComment) => {
-        if (postedComment) {
-          setComments((prevComments) => [postedComment, ...prevComments]);
-          setBody("");
-        } else {
-          console.error("Failed to post comment.");
-        }
+        setComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment.comment_id === optimisticComment.comment_id
+              ? postedComment
+              : comment
+          )
+        );
+        setPostError("");
       })
       .catch((err) => {
-        console.error("Error posting comment:", err);
+        setPostError("Error posting comment.");
+
+        setComments((prevComments) =>
+          prevComments.filter(
+            (comment) => comment.comment_id !== optimisticComment.comment_id
+          )
+        );
       });
   };
 
   const deleteComment = (comment_id) => {
+    const commentToDelete = comments.find(
+      (comment) => comment.comment_id === comment_id
+    );
     setComments((prevComments) =>
       prevComments.filter((comment) => comment.comment_id !== comment_id)
     );
 
     deleteCommentById(comment_id).catch((err) => {
-      console.error("Error deleting comment:", err);
-      setComments((prevComments) => [
-        ...prevComments,
-        comments.find((comment) => comment.comment_id === comment_id),
-      ]);
+      setComments((prevComments) => [commentToDelete, ...prevComments]);
     });
   };
 
@@ -82,6 +107,8 @@ export default function CommentCard({ article_id, username }) {
           onChange={(e) => setBody(e.target.value)}
         />
         <button onClick={postComment}>Post Comment</button>
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        {postError && <p style={{ color: "red" }}>{postError}</p>}
       </div>
 
       <ul>

@@ -4,6 +4,7 @@ import SingleArticlePage from "./SingleArticlePage";
 import LoginPage from "./LoginPage";
 import TopicsPage from "./TopicsPage";
 import RedirectRoute from "./RedirectRoute";
+import PathNotFound from "./PathNotFound";
 
 export default function MainRoutes({ username, setUsername, setAvatarUrl }) {
   return (
@@ -38,6 +39,7 @@ export default function MainRoutes({ username, setUsername, setAvatarUrl }) {
           </RedirectRoute>
         }
       />
+      <Route path="*" element={<PathNotFound/>} />
     </Routes>
   );
 }

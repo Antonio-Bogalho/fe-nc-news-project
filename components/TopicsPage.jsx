@@ -19,13 +19,14 @@ export default function TopicsPage() {
         setIsLoading(false);
       })
       .catch((err) => {
-        setIsError(true);
-        setIsLoading(false);
+        if (err.response.status === 404){
+          setIsError(true);
+        }
       });
   }, [topic]);
 
   if (isError) {
-    return <p>ERROR 404 - Content not found</p>;
+    return <p>ERROR 404 - Topic not found</p>;
   }
   if (isLoading) {
     return <div>LOADING!</div>;
