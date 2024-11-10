@@ -99,8 +99,8 @@ export default function CommentCard({ article_id, username }) {
   }
 
   return (
-    <section>
-      <div>
+    <section className="comment-section">
+      <div className="comment-input-container">
         <textarea
           placeholder="Write a comment"
           value={body}
@@ -111,7 +111,7 @@ export default function CommentCard({ article_id, username }) {
         {postError && <p style={{ color: "red" }}>{postError}</p>}
       </div>
 
-      <ul>
+      <ul className="comments-section">
         {comments.length > 0 ? (
           comments.map((comment) => (
             <li key={comment.comment_id}>

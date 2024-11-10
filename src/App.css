@@ -14,27 +14,104 @@ header {
 
 .nav-links {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
   background-color: var(--primary-color);
-  padding: 10px 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px var(--shadow-color);
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  gap: 2rem;
 }
+
 
 .nav-links li {
   list-style: none;
 }
 
+
 .nav-links li a {
   color: #ffffff;
   font-size: 1rem;
   font-weight: 500;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-links li a:hover {
+  background-color: rgba(255, 255, 255, 0.15); 
+  transform: scale(1.05);
+}
+
+
+.nav-links li span {
+  color: #ffffff;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-links li img {
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  margin-left: 0.5rem;
+}
+
+
+.upward {
+  position: relative;
+}
+
+.upward button {
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
   transition: color 0.3s;
 }
-.nav-links li a:hover {
-  color: #e0e0e0;
+
+.upward button:hover {
+  color: var(--background-color);
+}
+
+.upward ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+  z-index: 10;
+}
+
+
+.upward ul li {
+  margin: 0;
+}
+
+.upward ul li a {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: block;
+}
+
+.upward ul li a:hover {
+  background-color: rgba(139, 93, 255, 0.1); 
 }
 
 .card {
@@ -75,4 +152,355 @@ header {
     justify-content: space-around;
   }
 }
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  background:linear-gradient(90deg,#000 50%,#0000 0) right/200% 100%;
+  animation: l21 2s infinite linear;
+  margin: auto;
+}
+.loader::before {
+  content :"Loading...";
+  color: #0000;
+  padding: 0 5px;
+  background: inherit;
+  background-image: linear-gradient(90deg,#fff 50%,#000 0);
+  -webkit-background-clip:text;
+          background-clip:text;
+}
 
+@keyframes l21{
+  100%{background-position: left}
+}
+
+
+ul.articles-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0;
+  list-style-type: none;
+  margin: 2rem 0;
+}
+
+
+.articles-list li {
+  background-color: #f2dbc9;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.articles-list li:hover {
+  transform: translateY(-5px);
+}
+
+
+.articles-list li h3 {
+  color: #563A9C;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+
+.articles-list li p {
+  color: #6A42C2;
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
+}
+
+
+.articles-list li button {
+  background-color: #8B5DFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  margin: 0.2rem;
+  transition: background-color 0.2s ease;
+}
+
+.articles-list li button:disabled {
+  background-color: #D1C4FF;
+  cursor: not-allowed;
+}
+
+.articles-list li button:hover:not(:disabled) {
+  background-color: #6A42C2;
+}
+
+
+.articles-list li img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 5px;
+  margin: 0.5rem 0;
+  object-fit: cover;
+}
+
+
+.articles-list li .created-at {
+  font-size: 0.75rem;
+  color: #8B5DFF;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+
+.single-article-page {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #FFF7D1;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.single-article-page h3 {
+  font-size: 2rem;
+  color: #563A9C;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+
+.single-article-page p {
+  font-size: 1rem;
+  color: #6A42C2;
+  margin: 0.5rem 0;
+}
+
+
+.single-article-page img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+
+.single-article-page button {
+  background-color: #8B5DFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  margin: 0.3rem;
+  transition: background-color 0.2s ease;
+}
+
+.single-article-page button:disabled {
+  background-color: #D1C4FF;
+  cursor: not-allowed;
+}
+
+.single-article-page button:hover:not(:disabled) {
+  background-color: #6A42C2;
+}
+
+.single-article-page .comments-header {
+  font-size: 1.5rem;
+  color: #563A9C;
+  margin: 1.5rem 0 1rem;
+}
+
+
+.comments-section {
+  background-color: #FFF7D1;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.comments-section li {
+  list-style-type: none;
+  padding: 1rem;
+  border-bottom: 1px solid #E0D6FF;
+  margin-bottom: 1rem;
+}
+
+.comments-section li:last-of-type {
+  border-bottom: none;
+}
+
+
+.comments-section li p:first-of-type {
+  font-weight: bold;
+  color: #563A9C;
+  font-size: 0.9rem;
+}
+
+
+.comments-section li p:nth-of-type(2) {
+  font-size: 1rem;
+  color: #333;
+}
+
+
+.comments-section li button {
+  background-color: #8B5DFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  margin-right: 0.3rem;
+}
+
+.comments-section li button:hover:not(:disabled) {
+  background-color: #6A42C2;
+}
+
+.comment-input-container {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+
+.comment-input-container textarea {
+  flex: 1;
+  resize: vertical;
+  min-height: 80px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #E0D6FF;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.2s ease;
+}
+
+.comment-input-container textarea:focus {
+  border-color: #8B5DFF;
+  outline: none;
+}
+
+
+.comment-input-container button {
+  margin-left: 1rem;
+  background-color: #8B5DFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.comment-input-container button:hover {
+  background-color: #6A42C2;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff7d1; 
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+
+.login-title {
+  font-size: 2rem;
+  color: #8b5dff;
+  margin-bottom: 1rem;
+}
+
+
+.login-select {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 2px solid #6a42c2;
+  border-radius: 8px;
+  background-color: white;
+  color: #6a42c2;
+  margin-bottom: 1.5rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.login-select:focus {
+  border-color: #8b5dff; 
+}
+
+
+.login-button {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #8b5dff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.login-button:hover {
+  background-color: #6a42c2; 
+}
+
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #fff7d1; 
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+
+.sort-controls label {
+  font-size: 1rem;
+  color: #6a42c2;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+
+.sort-controls select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #6a42c2; 
+  background-color: white;
+  border: 2px solid #6a42c2; 
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.sort-controls select:hover,
+.sort-controls select:focus {
+  border-color: #8b5dff;
+  background-color: #f3e8ff; 
+}
+
+
+.sort-controls option {
+  color: #563a9c;
+  font-weight: normal;
+  background-color: white;
+}
