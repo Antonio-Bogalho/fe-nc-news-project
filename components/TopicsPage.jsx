@@ -35,7 +35,7 @@ export default function TopicsPage() {
   return (
     <div>
       <h2>Articles on {topic.charAt(0).toUpperCase() + topic.slice(1)}!</h2>
-      <ul>
+      <ul className="articles-list">
         {articlesList.map((article) => (
           <ArticleCard article={article} key={article.article_id} />
         ))}

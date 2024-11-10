@@ -31,7 +31,7 @@ export default function HomePage() {
   };
 
   if (isError) return <p>ERROR 404 - Content not found</p>;
-  if (isLoading) return <div>LOADING!</div>;
+  if (isLoading) return <div class="loader"></div>;
 
   return (
     <div>
@@ -56,7 +56,7 @@ export default function HomePage() {
         </select>
       </div>
 
-      <ul>
+      <ul className="articles-list">
         {articlesList.map((article) => (
           <ArticleCard article={article} key={article.article_id} />
         ))}

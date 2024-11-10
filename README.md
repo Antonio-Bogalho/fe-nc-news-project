@@ -17,7 +17,7 @@ Once installed, you can run the command: npm run dev
 This will use the axios dependency to start the local development server.
 You can then access the app at http://localhost:5173/ 
 
-At this point in development, you can login using one of the usernames already in the database such as: tickle122, grumpy19, happyamy2016, cooljmessy, weegembump and jessjelly
+At this point in development, you can login using one one of the usernames already established in the database in the drop down menu.
 Functionality to create a new user with their username, name and avatar will be implemented in the future.
 
 You can manually test the app by interacting with the components and features, this is a project

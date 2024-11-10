@@ -38,7 +38,7 @@ export default function ArticleCard({ article }) {
         <h3>{article.title}</h3>
         <p>Topic: {article.topic}</p>
         <p>Posted by: {article.author}</p>
-        <img src={article.article_img_url} />
+        <img src={article.article_img_url} alt={`Image for ${article.title}`} />
         <p>Votes: {votes}</p>
         <p>Comments: {article.comment_count}</p>
       </Link>

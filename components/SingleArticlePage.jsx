@@ -59,7 +59,7 @@ export default function SingleArticlePage({username}) {
   };
 
   return (
-    <section>
+    <section className="single-article-page">
       <h3>{singleArticle.title}</h3>
       <p>Topic: {singleArticle.topic}</p>
       <p>Posted by: {singleArticle.author}</p>

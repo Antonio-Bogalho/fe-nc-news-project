@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { fetchUsers } from "../utils/api";
 
 export default function LoginPage({ setUsername, setAvatarUrl }) {
-  const [inputUsername, setInputUsername] = useState("");
+  const [selectedUsername, setSelectedUsername] = useState("");
   const [isError, setIsError] = useState(false);
-  const [users, setUsers] = useState("");
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function LoginPage({ setUsername, setAvatarUrl }) {
   }
 
   const handleLogin = () => {
-    const user = users.find((user) => user.username === inputUsername);
+    const user = users.find((user) => user.username === selectedUsername);
     if (user) {
       setUsername(user.username);
       setAvatarUrl(user.avatar_url);
@@ -34,15 +34,24 @@ export default function LoginPage({ setUsername, setAvatarUrl }) {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <input
-        type="text"
-        placeholder="Enter your username"
-        value={inputUsername}
-        onChange={(e) => setInputUsername(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
+    <div className="login-container">
+      <h1 className="login-title">Login</h1>
+      <select
+        value={selectedUsername}
+        onChange={(e) => setSelectedUsername(e.target.value)}
+        className="login-select"
+      >
+        <option value="">Select a user</option>
+        {users.map((user) => (
+          <option key={user.username} value={user.username}>
+            {user.username}
+          </option>
+        ))}
+      </select>
+      <button onClick={handleLogin} className="login-button">
+        Login
+      </button>
     </div>
   );
 }
+
